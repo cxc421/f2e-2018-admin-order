@@ -1,0 +1,35 @@
+@import 'globals';
+
+li.site-item {
+  @include remark;
+
+  i {
+    font-size: 45px;
+  }
+  .title {
+    margin-left: 20px;
+    color: $grey-4;
+    &::first-letter {
+      text-transform: capitalize;
+    }
+  }
+  .value {
+    font-size: $font-size-3;
+    margin-left: auto;      
+  } 
+  .percent {
+    margin-left: 20px;      
+
+    &.up {
+      color: $green;
+    }
+    &.down {
+      color: $red;
+    }
+
+    i {
+      margin-right: 8px;
+      font-size: 18px;
+    }
+  }
+}

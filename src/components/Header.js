@@ -7,7 +7,7 @@ export default class Header extends React.Component {
   render() {
     return (
       <div className="header">
-        <div className="logo">Shoptime</div>
+        <NavLink to="/" exact className="logo">Shoptime</NavLink>
         <NavLink to="/" exact className="nav-link">HOME</NavLink>
         <NavLink to="/orders" className="nav-link">ORDERS</NavLink>
         <NavLink to="/product" className="nav-link">PRODUCT</NavLink>

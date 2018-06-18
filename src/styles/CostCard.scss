@@ -1,0 +1,37 @@
+@import 'globals';
+
+.cost-card {
+  display: flex;
+  justify-content: center;
+  padding: 26px 0;
+  flex-direction: column;
+
+  h2 {
+    @include remark;
+    font-weight: normal;
+    i {
+      margin-right: 8px;
+      font-size: $font-size-3;
+    }
+    line-height: 25px; 
+  }
+
+  p {
+    @include title;
+    margin-top: 14px;
+    font-size: 36px;
+    line-height: 43px;
+
+    &.green {
+      color: $green;
+    }
+
+    &.red {
+      color: $red;
+    }
+
+    &.blue {
+      color: $blue;
+    }
+  }
+}

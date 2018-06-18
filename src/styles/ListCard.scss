@@ -1,0 +1,40 @@
+@import 'globals';
+
+.list-card {
+  padding: 30px 40px;
+  height: 456px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+
+  h2 {
+    @include title;
+    margin-bottom: 30px;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+
+  ul {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+
+    &.line {
+      flex-basis: 1px;
+      flex-grow: 0;
+      flex-shrink: 0;
+      background: #ebebeb;
+
+      &:last-child {
+        display: none;
+      }
+    }
+  }
+}

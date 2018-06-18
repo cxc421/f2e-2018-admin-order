@@ -1,0 +1,15 @@
+@import 'globals';
+
+.chart-card {
+  padding: 30px 40px;
+
+  h2 {
+    @include title;
+    line-height: 28px;
+  }
+
+  .chart-area {
+    margin-top: 16px;
+    height: 302px;
+  }
+}
