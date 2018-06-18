@@ -1,0 +1,27 @@
+@import 'globals';
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html , body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: $grey-5;
+  font-family: 'Roboto', Microsoft JhengHei, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+}
+
+.app {
+  display: block;
+  width: $app-width;
+  margin: 0 auto;
+  background: $black;
+  // height: 300px;
+}
