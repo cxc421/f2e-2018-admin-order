@@ -6,7 +6,7 @@ import { transValueToMoney } from 'util/transValueToMoney';
 export default class SiteItem extends React.PureComponent {
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
 
     const { name, views, previous } = this.props;
     const direction = views >= previous ? "up" : "down";

@@ -2,6 +2,7 @@
 
 li.site-item {
   @include remark;
+  align-items: center;
 
   i {
     font-size: 45px;

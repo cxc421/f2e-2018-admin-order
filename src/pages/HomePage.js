@@ -34,6 +34,30 @@ export default class HomePage extends React.PureComponent {
       }
     ];
 
+    const orderData = [
+      {
+        imgUrl: require("images/index01.png"),
+        title: "Vintage T-shirt",
+        date: '2018/6/13 13:42',
+        client: "Bella Willis",
+        total: 3200
+      },
+      {
+        imgUrl: require("images/index02.png"),
+        title: "Cowboy Jacket",
+        date: '2018/6/13 10:45',
+        client: "Andrian Cummings",
+        total: 2800
+      },
+      {
+        imgUrl: require("images/index03.png"),
+        title: "Coach Coast",
+        date: '2018/6/13 8:26',
+        client: "Lura Holland",
+        total: 1600
+      }             
+    ]
+
     return (
       <Page>
         <div className="home-page">
@@ -72,6 +96,7 @@ export default class HomePage extends React.PureComponent {
 
           <div className="card-area">
             <ListCard title="Transaction Website" itemType="website" itemData={websiteData} />
+            <ListCard title="Latest Orders" itemType="order" itemData={orderData} />
           </div>
 
         </div>        

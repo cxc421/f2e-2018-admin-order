@@ -1,0 +1,62 @@
+@import 'globals';
+
+.order-item {
+  
+  display: flex;
+  align-items: stretch;
+
+  .img-area {
+    height: 100px;
+    width: 100px;
+    flex-basis: 100px;
+    flex-shrink: 0;
+    flex-grow: 0;
+
+    background-size: cover;
+    background-position: center;
+  }
+
+  .content-area {
+    margin-left: 21px;
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    h3 {
+      @include subtitle;
+      line-height: 24px;
+    }
+
+    .row {
+      margin-top: 8px;
+      display: flex;
+      align-items: baseline;
+      &:last-child {
+        margin-top: 2px;
+      }
+    }
+
+    .icon-and-text {
+      @include remark;
+      color: $grey-4;
+      line-height: 18px;
+      i {
+        margin-right: 7px;
+        width: 16px;
+        height: 16px;
+        text-align: center;
+      }
+    }
+
+    .total-text {
+      @include placeholder;
+      margin-left: auto;
+    }
+
+    .total-value {
+      @include subtitle;
+      margin-left: auto;
+    }
+  }
+}

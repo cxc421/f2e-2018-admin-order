@@ -40,4 +40,11 @@ $app-width: 1024px;
 @mixin remark {
   font-family: HelveticaNeue-Medium, 'Roboto', Microsoft JhengHei, sans-serif;
   font-size: $font-size-2;
+  font-weight: normal;
+}
+
+@mixin placeholder {
+  font-family: HelveticaNeue-Medium, 'Roboto', Microsoft JhengHei, sans-serif;
+  font-size: $font-size-1;
+  font-weight: normal;
 }
