@@ -194,7 +194,6 @@ export default class ChartCanvas extends React.PureComponent {
         let point = canvas.parentNode.querySelector(`#point-${i}-${j}`);
         point.style.left = xPos + 'px';
         point.style.top = yPos + 'px';
-        point.style.display = "block";
       }
       ctx.stroke();
     }
