@@ -3,24 +3,27 @@
 .cost-card {
   display: flex;
   justify-content: center;
-  padding: 26px 0;
+  padding: 26px 0 30px 0;
   flex-direction: column;
 
   h2 {
     @include remark;
-    font-weight: normal;
+    // font-weight: normal;
+    font-weight: bold;
+    // height: 25px;
+    display: flex;
+    align-items: center;
     i {
       margin-right: 8px;
       font-size: $font-size-3;
     }
-    line-height: 25px; 
   }
 
   p {
     @include title;
     margin-top: 14px;
     font-size: 36px;
-    line-height: 43px;
+    // line-height: 43px;
 
     &.green {
       color: $green;
