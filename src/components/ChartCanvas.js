@@ -1,6 +1,18 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
+import 'styles/ChartCanvas.scss';
 
 import { transValueToMoney } from 'util/transValueToMoney';
+
+const toolTipContentFuncProto = fontAwesomeClassName => value =>
+  <React.Fragment>
+    <i className={fontAwesomeClassName}></i>
+    <span>
+      {transValueToMoney(value)}
+    </span>
+  </React.Fragment>
+;
+
 
 export default class ChartCanvas extends React.PureComponent {
 
@@ -33,6 +45,16 @@ export default class ChartCanvas extends React.PureComponent {
       '#d0021b',
       '#4a90e2',
       '#7ed321'
+    ],
+    pointClassName: [
+      'red',
+      'blue',
+      'green'
+    ],
+    toolTipContentFunc: [
+      toolTipContentFuncProto('fas fa-boxes'),
+      toolTipContentFuncProto('fas fa-money-bill'),
+      toolTipContentFuncProto('fas fa-hand-holding-usd'),
     ]
   };
 
@@ -43,14 +65,66 @@ export default class ChartCanvas extends React.PureComponent {
   }
 
   render() {
-    return <canvas ref={this.canvasRef}></canvas>;
+
+    const { 
+      data, 
+      pointClassName:styleClassArray,
+      toolTipContentFunc
+    } = this.props;
+
+    return (
+      <div className="chart-canvas">
+        <canvas ref={this.canvasRef}></canvas>
+        {
+          data.map((lineData, lineIdx) => 
+            lineData.map((point, pointIdx) => {
+              const styleClassName = styleClassArray[lineIdx];
+              const pointClassName = 'chart-point ' + styleClassName;
+              const tooltipClassName = 'chart-point-tooltip ' + styleClassName;
+              const tooltipContent = toolTipContentFunc[lineIdx];
+
+              const id = lineIdx + '-' + pointIdx;
+              const pointId = 'point-' + id;
+              const tooltipId = 'tooltip-' + id;
+
+              return (
+                <React.Fragment key={id}>
+                  <div
+                    id={pointId} 
+                    className={pointClassName} 
+                    data-tip 
+                    data-for={tooltipId}
+                    onMouseEnter={this.renderChart.bind(this, lineIdx)}
+                    onMouseLeave={this.renderChart.bind(this, -1)}
+                  >
+                  </div>
+                  <ReactTooltip 
+                    effect="solid" 
+                    id={tooltipId} 
+                    className={tooltipClassName}
+                  >
+                    {
+                      tooltipContent(point.y)
+                    }
+                  </ReactTooltip>                  
+                </React.Fragment>
+              );
+            })
+          )
+        }
+      </div>
+    );
   }
 
   componentDidMount() {
     this.renderChart();
   }
 
-  renderChart() {
+  componentDidUpdate() {
+    this.renderChart();
+  }
+
+  renderChart( focusLineId = -1 ) {
     const canvas = this.canvasRef.current;
     const parentNode = canvas.parentNode;
 
@@ -59,10 +133,10 @@ export default class ChartCanvas extends React.PureComponent {
 
     this.renderYAxis();
     this.renderXAxis();
-    this.renderLine();
+    this.renderLine(focusLineId);
   }
 
-  renderLine() {
+  renderLine( focusLineId ) {
     const {
       chartLeftMargin,
       chartRightMargin,
@@ -99,7 +173,7 @@ export default class ChartCanvas extends React.PureComponent {
       const lineData = data[i];
       const lineColor = dataColor[i];
 
-      ctx.lineWidth = 2;
+      ctx.lineWidth = (i !== focusLineId) ? 2 : 4;
       ctx.strokeStyle = lineColor;
       ctx.beginPath();
 
@@ -114,6 +188,13 @@ export default class ChartCanvas extends React.PureComponent {
         } else {
           ctx.moveTo(xPos, yPos);
         }
+
+        
+        // test
+        let point = canvas.parentNode.querySelector(`#point-${i}-${j}`);
+        point.style.left = xPos + 'px';
+        point.style.top = yPos + 'px';
+        point.style.display = "block";
       }
       ctx.stroke();
     }
