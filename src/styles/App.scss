@@ -20,6 +20,9 @@ h1, h2, h3, h4, h5, h6, p {
 
 a {
   text-decoration: none;
+  &:hover {
+    text-decoration: none; 
+  }
 }
 
 ul {
@@ -28,10 +31,20 @@ ul {
   margin: 0;
 } 
 
+// Fix default bootstrap 
+.dropdown-menu {
+  box-shadow: 1px 2px 10px 0 $grey-4;
+  border-radius: 2px;
+  background: #fff;
+  border: none;
+  padding: 16px 20px;
+  margin-top: 8px;
+}
+
 .app {
   display: block;
-  width: $app-width;
-  margin: 0 auto;
+  // width: $app-width;
+  // margin: 0 auto;
   background: $black;
   // height: 300px;
 }

@@ -116,8 +116,18 @@ export default class ChartCanvas extends React.PureComponent {
     );
   }
 
+  onWindowResize = () => {
+    this.renderChart();
+    console.log('resize');
+  }
+
   componentDidMount() {
     this.renderChart();
+    window.addEventListener('resize', this.onWindowResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onWindowResize);    
   }
 
   componentDidUpdate() {

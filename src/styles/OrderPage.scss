@@ -1,0 +1,151 @@
+@import 'globals';
+
+.order-page {
+
+  .top-menu-row {
+    display: flex;
+    align-items: center;
+    padding-left: 16px;
+
+    .down-icon {
+      margin-left: 5px;
+    }
+
+    .tag-icon {
+      margin-left: 16px;
+      
+      .tag-icon-toggler {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }  
+      .tag-icon-menu {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 125px;
+        padding: 8px 0;
+
+        & > div {
+          width: 100%;
+          padding: 8px 0;
+          text-align: center;
+
+          @include remark;
+
+          &:hover {
+            background: black;
+            color: white;
+            cursor: default;
+          }
+        }
+      }    
+    }
+
+    .edit-section {
+      margin-left: auto;
+      .edit-text {
+        @include subtitle-1;
+        i {
+          margin-left: 8px;
+        }
+        cursor: pointer;
+      }
+      .edit-menu {
+        @include remark;
+        font-weight: 100;
+        right: 0;
+        background: white;
+
+        & > div {
+          display: flex;
+          align-items: center;
+          white-space: nowrap;      
+          margin-bottom: 19px;
+          cursor: default;
+          &:last-child {
+            margin-bottom: 0;
+          }          
+        }
+
+        .checkbox {
+          margin-right: 8px;
+        }
+
+      }
+    }
+  }
+
+  .order-table {
+    margin-top: 16px;
+
+    th {
+      background: white;
+      position: relative;
+      vertical-align: middle;
+      @include subtitle-2;
+      line-height: 19px;
+    }
+
+    td, th {
+      padding-left: 16px;
+    }
+
+    td {
+      @include placeholder;
+      font-weight: 100;
+      line-height: 21px;
+      padding: 20px 16px;
+      .checkbox {
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+      span {
+        vertical-align: middle;
+      }
+    }
+
+    .table-box {
+      & > * {
+        display: flex;
+        justify-content: space-between;
+        line-height: 21px;
+      }
+      .grey {
+        color: $grey-4;
+      }
+
+      padding: 8px 0;
+      border-top: solid 1px white;
+
+      &:first-child {
+        padding-top: 0;
+        border-top: none;
+      }
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
+
+    .Paid {
+      // background: $green;
+      // border: $green;
+    }
+    .btn {
+      font-size: 14px;
+      line-height: 18px;
+      padding: 8px 16px;
+      i {
+        margin-left: 8px;
+      }
+      span, i {
+        vertical-align: middle;
+      }
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+
+  }
+
+}

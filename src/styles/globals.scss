@@ -37,6 +37,12 @@ $app-width: 1024px;
   font-weight: bold;
 }
 
+@mixin subtitle-1 {
+  font-family: HelveticaNeue-Bold, 'Roboto', Microsoft JhengHei, sans-serif;
+  font-size: $font-size-1;
+  font-weight: bold;
+}
+
 @mixin remark {
   font-family: HelveticaNeue-Medium, 'Roboto', Microsoft JhengHei, sans-serif;
   font-size: $font-size-2;

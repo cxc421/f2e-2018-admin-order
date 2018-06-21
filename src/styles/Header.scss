@@ -2,6 +2,13 @@
 
 .header {
   background: $black;
+  background: #232527;
+}
+
+.header .wrapper {
+  max-width: $app-width;
+  margin: 0 auto;
+  background: $black;
   height: 70px;
   padding: 0 42px;
   color: $white;

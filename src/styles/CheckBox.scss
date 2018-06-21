@@ -1,0 +1,29 @@
+@import 'globals';
+
+.checkbox {
+  border: solid 1px black;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  padding: 0;
+  border-radius: 2px;
+  position: relative;
+
+  i {
+    font-size: 10px;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(.9);
+    opacity: 0;  
+  }
+
+  &.checked {
+    background: black;
+    i {
+      color: white;
+      opacity: 1;
+    }
+  }  
+}

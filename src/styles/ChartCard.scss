@@ -2,6 +2,7 @@
 
 .chart-card {
   padding: 30px 40px;
+  width: 100%;
 
   h2 {
     @include title;
@@ -11,5 +12,6 @@
   .chart-area {
     margin-top: 16px;
     height: 302px;
+    overflow: hidden;
   }
 }

@@ -1,6 +1,12 @@
 @import 'globals';
 
 .page {
+  background: #232527;
+}
+
+.page .wrapper{
   background: $grey-1;
   padding: 30px 42px 40px;
+  max-width: $app-width;
+  margin: 0 auto;  
 }

@@ -14,9 +14,9 @@
 
 .chart-canvas {
   position: relative;
-  width: 100%;
+  // width: 100%;
   height: 100%;
-  overflow: hidden; 
+  overflow: hidden;    
 
   .chart-point {
     position: absolute;
