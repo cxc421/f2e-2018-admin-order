@@ -9,6 +9,7 @@ import Page from 'components/Page';
 import CheckBox from 'components/CheckBox';
 import DropDown from 'components/DropDown';
 import { transValueToMoney } from 'util/transValueToMoney';
+import { orderData } from '../demo_data';
 
 export default class OrderPage extends React.Component {
   state = {
@@ -64,32 +65,7 @@ export default class OrderPage extends React.Component {
         checked: true
       }
     ],
-    dataList: [
-      {
-        'order-id': 1,
-        customer: {
-          checked: false,
-          name: 'Ian Medina'
-        },
-        'product-list': [
-          {
-            name: 'Vestibulum.',
-            money: 1400,
-            number: 1
-          },
-          {
-            name: 'Fusce vehicu.',
-            money: 800,
-            number: 1
-          }
-        ],
-        total: 2200,
-        'add-to-chart': '2018/6/8 13:39',
-        'check-out': '2018/6/8 20:23',
-        address: '386 Windler Drives Apt. 358',
-        status: 'Paid'
-      }
-    ]
+    dataList: orderData
   }
 
   updateEditSection(id, checked) {
@@ -107,13 +83,66 @@ export default class OrderPage extends React.Component {
     }));
   }
 
+  toogleCustomerCheck = (id, checked) => {
+    if (id == null) {
+      this.setState(prevState => ({
+        dataList: prevState.dataList.map(data => {
+          return {...data, customer: {
+            ...data.customer,
+            checked
+          }};
+        })
+      }));
+    } else {
+      this.setState(prevState => ({
+        dataList: prevState.dataList.map(data => {
+          if (data['order-id'] === id) {
+            return {...data, customer: {
+              ...data.customer,
+              checked
+            }};
+          } else {
+            return data;
+          }
+        })
+      }));
+    }
+  };
+
+  checkByStatus = (status) => {
+    this.setState(prevState => ({
+      dataList: prevState.dataList.map(data => {
+        return {
+          ...data, customer: {
+            ...data.customer,
+            checked: data.status === status
+          }
+        };
+      })
+    }));    
+  }
+
+  updateStatusById = (id, status) => {
+    this.setState(prevState => ({
+      dataList: prevState.dataList.map(data => {
+        if (data['order-id'] === id) {
+          return {
+            ...data, status
+          };
+        } else {
+          return data;
+        }
+      })
+    }));
+  };
+
   renderTdContent(data, tag) {
     const obj = data[tag];
     switch (tag) {
       case 'customer':
         return (
           <React.Fragment>
-            <CheckBox checked={obj.checked}/>
+            <CheckBox checked={obj.checked} onClick={() => this.toogleCustomerCheck(data['order-id'], !obj.checked)}/>
             <span>{obj.name}</span>
           </React.Fragment>
         );
@@ -130,21 +159,32 @@ export default class OrderPage extends React.Component {
     
       case 'total':
         return '$' + transValueToMoney(obj);
-      case 'add-to-chart':
-        return obj;
-      case 'check-out':
-        return obj;
-      case 'address':
-        return obj;
       case 'status':
+        const colorMap = {
+          Paid: 'success',
+          Unpaid: 'secondary',
+          Shipping: 'warning',
+          Done: 'primary'
+        };
+        const id = data['order-id'];
         return (
-          <Button className={obj} color="success">
-            <span>{obj}</span>
-            <i className="fas fa-caret-down"></i>
-          </Button>
+          <DropDown>
+            <div dp-type="toggler">
+              <Button className={obj} color={colorMap[obj]}>
+                <span>{obj}</span>
+                <i className="fas fa-caret-down"></i>
+              </Button>            
+            </div>
+            <div dp-type="menu" className="hover-menu btn-menu">
+              <div onClick={() => this.updateStatusById(id, 'Paid')}>Paid</div>
+              <div onClick={() => this.updateStatusById(id, 'Unpaid')}>Unpaid</div>
+              <div onClick={() => this.updateStatusById(id, 'Shipping')}>Shipping</div>
+              <div onClick={() => this.updateStatusById(id, 'Done')}>Done</div>
+            </div>
+          </DropDown>          
         );
       default:
-        return 123;
+        return obj;
     }
   }
 
@@ -157,8 +197,8 @@ export default class OrderPage extends React.Component {
       }
       return {...tot, [edit.id]: true};
     }, {});
-    const tagArray = ['order-id', 'customer', 'product-list', 'total', 'add-to-chart', 'check-out', 'address', 'status'];
-    
+    const tagArray = ['order-id', 'customer', 'product-list', 'total', 'add-to-chart', 'check-out', 'address', 'phone', 'email', 'status'];
+    const allChecked = ! dataList.some(data => !data.customer.checked);    
 
     return (
       <Page>
@@ -166,20 +206,20 @@ export default class OrderPage extends React.Component {
 
           <div className="top-menu-row">
 
-            <CheckBox />
+            <CheckBox checked={allChecked} onClick={() => this.toogleCustomerCheck(null, !allChecked) } />
             <i className="fas fa-caret-down down-icon"></i>
             
             <DropDown className="tag-icon" keepMenuOpen={false}>
               <div dp-type="toggler" className="tag-icon-toggler">
                 <i className="fas fa-tags"></i>              
               </div>            
-              <div dp-type="menu" className="tag-icon-menu">
-                <div>Select All</div>
-                <div>Unselect All</div>
-                <div>Paid</div>
-                <div>Unpaid</div>
-                <div>Shipping</div>
-                <div>Done</div>
+              <div dp-type="menu" className="hover-menu">
+                <div onClick={() => this.toogleCustomerCheck(null, true)}>Select All</div>
+                <div onClick={() => this.toogleCustomerCheck(null, false)}>Unselect All</div>
+                <div onClick={() => this.checkByStatus('Paid')}>Paid</div>
+                <div onClick={() => this.checkByStatus('Unpaid')}>Unpaid</div>
+                <div onClick={() => this.checkByStatus('Shipping')}>Shipping</div>
+                <div onClick={() => this.checkByStatus('Done')}>Done</div>
               </div>
             </DropDown>
 
@@ -208,7 +248,7 @@ export default class OrderPage extends React.Component {
 
           </div>
 
-          <Table className="order-table" borderless={true} striped={true} >
+          <Table className="order-table" borderless={true} striped={false} >
             <thead>
               <tr>
                 {
@@ -222,21 +262,30 @@ export default class OrderPage extends React.Component {
             </thead>
             <tbody>
               {
-                dataList.map((data, idx) => 
-                  <tr key={idx}>
-                    {
-                      tagArray.map((tag, idy) => 
-                        enableTags[tag] ?
-                        <td key={idx + '-' + idy}>
-                          {
-                            this.renderTdContent(data, tag)
-                          }
-                        </td> :
-                        null
-                      )
-                    }
-                  </tr>
-                )
+                dataList.map((data, idx) => {
+                  let className = "";
+                  if (data.status === 'Unpaid') {
+                    className = "grey";
+                  } else if (data.status === "Done") {
+                    className = "grey delete";
+                  }
+
+                  return (
+                    <tr key={idx} className={className}>
+                      {
+                        tagArray.map((tag, idy) =>
+                          enableTags[tag] ?
+                            <td key={idx + '-' + idy}>
+                              {
+                                this.renderTdContent(data, tag)
+                              }
+                            </td> :
+                            null
+                        )
+                      }
+                    </tr>  
+                  );
+                })
               }
             </tbody>
           </Table>          
