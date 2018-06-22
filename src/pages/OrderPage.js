@@ -11,13 +11,18 @@ import Page from 'components/Page';
 import CheckBox from 'components/CheckBox';
 import DropDown from 'components/DropDown';
 import { transValueToMoney } from 'util/transValueToMoney';
-import { orderData, editSection } from '../demo_data';
+import { orderData, editSection, save as saveDemoData } from '../demo_data';
 
 export default class OrderPage extends React.Component {
   state = {
     editSection,
     dataList: orderData
   };
+
+  componentWillUnmount() {
+    saveDemoData('editSection', this.state.editSection);
+    saveDemoData('orderData', this.state.dataList);
+  }
 
   updateEditSection(id, checked) {
     this.setState(prevState => ({

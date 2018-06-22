@@ -1,5 +1,5 @@
 // ORDER EDIT SECTION
-const editSection = [
+let editSection = [
   {
     id: 'order-id',
     text: 'Order ID',
@@ -55,7 +55,7 @@ const editSection = [
 
 // ORDER_DATA
 const ORDER_DATA_NUM = 10;
-const orderData = [];
+let orderData = [];
 for (let i = 0; i < ORDER_DATA_NUM; i++) {
   const statusArray = ['Paid', 'Shipping', 'Unpaid', 'Done'];
   const randomNum = Math.round(Math.random() * (statusArray.length - 1));
@@ -90,7 +90,22 @@ for (let i = 0; i < ORDER_DATA_NUM; i++) {
   orderData.push(obj);
 }
 
+// SAVE function
+function save(type, newDate) {
+  switch (type) {
+    case 'orderData':
+      orderData = newDate;
+      break;
+    case 'editSection':
+      editSection = newDate;
+      break;
+    default:
+      console.error('Unknow type:' + type);
+  }
+}
+
 export {
   orderData,
-  editSection
+  editSection,
+  save
 };
