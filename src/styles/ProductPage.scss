@@ -158,13 +158,21 @@
       justify-content: space-between;
       padding-right: 10px;
 
-      div {
-        &::nth-child(1) {
-          color: blue !important;
+      > * {
+        &:nth-child(1) {
+          text-align: left;
+          min-width: 37px;
         }
-
+        &:nth-child(2) {
+          min-width: 47px;
+          text-align: left;
+          padding-left: 5px;
+        }   
+        &:nth-child(3) {
+          text-align: right;
+          min-width: 77px;
+        }
       }
-
 
     }
 
@@ -185,12 +193,6 @@
     .table-box-hide {
       opacity: 0;
     }
-
-    // .table-box-color {
-    //   // background: pink;
-    //   min-width: 36px;
-    //   text-align: left;
-    // }
 
     .product-row {
       display: flex;
@@ -228,6 +230,9 @@
       left: 0;
       transform: none;
       color:black;
+      & > div {
+        @include placeholder; 
+      }
     }
   }
 

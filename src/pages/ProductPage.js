@@ -11,72 +11,95 @@ import Page from 'components/Page';
 import CheckBox from 'components/CheckBox';
 import DropDown from 'components/DropDown';
 import { transValueToMoney } from 'util/transValueToMoney';
-// import { orderData, orderEditSection, save as saveDemoData } from '../demo_data';
+import { productData, save as saveDemoData } from '../demo_data';
 
 export default class OrderPage extends React.Component {
   state = {    
-    dataList: [
-      {        
-        product: {     
-          checked: false,
-          imgUrl: require('images/index01.png'),
-          name: 'Mauris non tem.'
-        },
-        original: 3200,
-        discount: 2800,
-        status: 'published',
-        spec: [
-          {
-            size: 'L',
-            color: 'Gray',
-            inventory: 15
-          },
-          {
-            size: 'L',
-            color: 'Black',
-            inventory: 20
-          },
-          {
-            size: 'M',
-            color: 'Gray',
-            inventory: 15
-          },
-          {
-            size: 'M',
-            color: 'Black',
-            inventory: 20
-          },
-          {
-            size: 'S',
-            color: 'Gray',
-            inventory: 15
-          },
-          {
-            size: 'S',
-            color: 'Black',
-            inventory: 20
-          }                    
-        ]
-      }
-    ]
+    dataList: productData
   };
 
   componentWillUnmount() {
-    // saveDemoData('orderEditSection', this.state.editSection);
-    // saveDemoData('orderData', this.state.dataList);
+    saveDemoData('productData', this.state.dataList);
   }
 
-  toogleCustomerCheck = (id, checked) => {
-
+  toggleProductCheck = (id, checked) => {
+    if (id == null) {
+      this.setState(prevState => ({
+        dataList: prevState.dataList.map(data => ({
+          ...data,
+          product: {
+            ...data.product,
+            checked
+          }
+        }))
+      }));
+    } else {
+      this.setState(prevState => ({
+        dataList: prevState.dataList.map(data => {
+          if (data.id !== id) {
+            return data;
+          }
+          return {
+            ...data,
+            product: {
+              ...data.product,
+              checked
+            }
+          }
+        })
+      }));      
+    }
   };
 
   checkByStatus = (status) => {
+    
+    this.setState(prevState => ({
+      dataList: prevState.dataList.map(data => {
+        if (data.status === status) {
+          return {
+            ...data,
+            product: {
+              ...data.product,
+              checked: true
+            }
+          };
+        } else {
+          return {
+            ...data,
+            product: {
+              ...data.product,
+              checked: false
+            }
+          };
+        }
+      })
+    }));    
   }
 
   updateStatusById = (id, status) => {
+    this.setState(prevState => ({
+      dataList: prevState.dataList.map(o => {
+        if (o.id === id) {
+          return {...o, status};
+        } else {
+          return o;
+        }
+      })
+    }));
   };
 
   updateStatusToChecked = (status) => {
+    this.setState(prevState => ({
+      dataList: prevState.dataList.map(data => {
+        if (data.product.checked) {
+          return {
+            ...data,
+            status
+          }
+        }
+        return data;
+      })
+    }));
   };
 
   renderTdContent(data, tag) {
@@ -88,7 +111,7 @@ export default class OrderPage extends React.Component {
       case 'product':
         return (
           <div className="product-row">
-            <CheckBox type="white" checked={obj.checked} />
+            <CheckBox type="white" checked={obj.checked} onClick={() => this.toggleProductCheck(data.id, !obj.checked)}/>
             <img src={obj.imgUrl} alt=""/>
             <span>{obj.name}</span>
           </div>
@@ -118,9 +141,9 @@ export default class OrderPage extends React.Component {
         });
 
         const totalArr = [arrL, arrM, arrS];
-        return totalArr.map(arr => {
+        return totalArr.map((arr, idArr) => {
           return arr.length > 0 && (
-            <div className="table-box-wrapper">
+            <div className="table-box-wrapper" key={idArr}>
             {
               arr.map((o, idx) => {
                 return (
@@ -138,16 +161,24 @@ export default class OrderPage extends React.Component {
       }
 
       case 'status':
-        let color = (obj === 'published' ? 'success' : 'secondary')
+        let color = (obj === 'published' ? 'success' : 'secondary');
         return (
-          <Button color={color}>
-            <span>{obj}</span>
-            <i className="fas fa-caret-down"></i>
-          </Button>
-        )
+          <DropDown>
+            <div dp-type="toggler">
+              <Button color={color}>
+                <span>{obj}</span> 
+                <i className="fas fa-caret-down"></i>
+              </Button>
+            </div>
+            <div dp-type="menu" className="hover-menu btn-menu">
+              <div onClick={() => this.updateStatusById(data.id, 'published')}>PUBLISHED</div>
+              <div onClick={() => this.updateStatusById(data.id, 'unpublished')}>UNPUBLISHED</div>
+            </div>
+          </DropDown>          
+        );
 
       default:
-        return 1;
+        return obj;
     }
   }
 
@@ -155,8 +186,7 @@ export default class OrderPage extends React.Component {
 
     const { dataList } = this.state;
     const tagArray = ['product', 'original', 'discount', 'spec', 'status'];
-    // const allChecked = !dataList.some(data => !data.customer.checked);
-    const allChecked = false;
+    const allChecked = !dataList.some(data => !data.product.checked);
 
     return (
       <Page>
@@ -164,17 +194,17 @@ export default class OrderPage extends React.Component {
 
           <div className="top-menu-row">
 
-            <CheckBox checked={allChecked} onClick={() => this.toogleCustomerCheck(null, !allChecked)} />
+            <CheckBox checked={allChecked} onClick={() => this.toggleProductCheck(null, !allChecked)} />
 
             <DropDown className="down-icon" keepMenuOpen={false}>
               <div dp-type="toggler" className="down-icon-toggler">
                 <i className="fas fa-caret-down"></i>
               </div>
               <div dp-type="menu" className="hover-menu">
-                <div onClick={() => this.toogleCustomerCheck(null, true)}>Select All</div>
-                <div onClick={() => this.toogleCustomerCheck(null, false)}>Unselect All</div>
-                <div onClick={() => this.checkByStatus('Published')}>Published</div>
-                <div onClick={() => this.checkByStatus('Unpublished')}>Unpublished</div>
+                <div onClick={() => this.toggleProductCheck(null, true)}>Select All</div>
+                <div onClick={() => this.toggleProductCheck(null, false)}>Unselect All</div>
+                <div onClick={() => this.checkByStatus('published')}>Published</div>
+                <div onClick={() => this.checkByStatus('unpublished')}>Unpublished</div>
               </div>
             </DropDown>
 
@@ -184,8 +214,8 @@ export default class OrderPage extends React.Component {
               </div>
               <div dp-type="menu" className="hover-menu">
                 <div className="disabled">Change Status to...</div>
-                <div onClick={() => this.updateStatusToChecked('Published')}>Published</div>
-                <div onClick={() => this.updateStatusToChecked('Unpublished')}>Unpublished</div>
+                <div onClick={() => this.updateStatusToChecked('published')}>Published</div>
+                <div onClick={() => this.updateStatusToChecked('unpublished')}>Unpublished</div>
               </div>
             </DropDown>
 
@@ -215,23 +245,27 @@ export default class OrderPage extends React.Component {
             </thead>
             <tbody>
             {
-              dataList.map((data, idx) => 
-                <tr key={`tr-${idx}`}>
-                  {
-                    tagArray.map((tag, idy) => 
-                      <td key={`td-${idx}-${idy}`}>
-                        {this.renderTdContent(data, tag)}
-                      </td>
-                    )
-                  }
-                </tr>
-              )
+              dataList.map((data, idx) => {
+                const className = data.status === 'published' ? '' : 'grey';
+
+                return (
+                  <tr key={`tr-${idx}`} className={className} >
+                    {
+                      tagArray.map((tag, idy) =>
+                        <td key={`td-${idx}-${idy}`}>
+                          {this.renderTdContent(data, tag)}
+                        </td>
+                      )
+                    }
+                  </tr>
+                );
+              })
             }
             </tbody>
           </Table>
-
-          <div style={{height: 800, width: 0}}></div>
-
+          {
+            // <div style={{ height: 800, width: 0 }}></div>
+          }
         </div>
       </Page>
     )

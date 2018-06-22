@@ -1,3 +1,5 @@
+import uuid from 'uuid/v4';
+
 // ORDER EDIT SECTION
 let orderEditSection = [
   {
@@ -90,15 +92,81 @@ for (let i = 0; i < ORDER_DATA_NUM; i++) {
   orderData.push(obj);
 }
 
+// PRODUCT DATA
+const productDataProto = {
+    id: 0,
+    product: {
+      checked: false,
+      imgUrl: '',
+      name: 'Mauris non tem.'
+    },
+    original: 3200,
+    discount: 2800,
+    status: 'published',
+    spec: [
+      {
+        size: 'L',
+        color: 'Gray',
+        inventory: 15
+      },
+      {
+        size: 'L',
+        color: 'Black',
+        inventory: 20
+      },
+      {
+        size: 'M',
+        color: 'Gray',
+        inventory: 15
+      },
+      {
+        size: 'M',
+        color: 'Black',
+        inventory: 20
+      },
+      {
+        size: 'S',
+        color: 'Gray',
+        inventory: 15
+      },
+      {
+        size: 'S',
+        color: 'Black',
+        inventory: 20
+      }
+    ]
+  };
+
+const PRODUCT_DATA_NUM = 3;
+let productData = [];
+const imgs = {
+  IMG_1 : require('images/index01.png'),
+  IMG_2 : require('images/index02.png'),
+  IMG_3 : require('images/index03.png')
+};
+for (let i = 0; i < PRODUCT_DATA_NUM; i++) {
+  productData.push({
+    ...productDataProto,
+    id: uuid(),
+    product: {
+      ...productDataProto.product,
+      imgUrl: imgs['IMG_' + ((i%3) + 1)]
+    },
+    status: (i < 2) ? 'published' : 'unpublished'
+  });
+}
+
 // SAVE function
-function save(type, newDate) {
+function save(type, newData) {
   switch (type) {
     case 'orderData':
-      orderData = newDate;
+      orderData = newData;
       break;
     case 'orderEditSection':
-      orderEditSection = newDate;
+      orderEditSection = newData;
       break;
+    case 'productData':
+      productData = newData;
     default:
       console.error('Unknow type:' + type);
   }
@@ -107,5 +175,6 @@ function save(type, newDate) {
 export {
   orderData,
   orderEditSection,
+  productData,
   save
 };
