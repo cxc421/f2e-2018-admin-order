@@ -1,5 +1,5 @@
 // ORDER EDIT SECTION
-let editSection = [
+let orderEditSection = [
   {
     id: 'order-id',
     text: 'Order ID',
@@ -96,8 +96,8 @@ function save(type, newDate) {
     case 'orderData':
       orderData = newDate;
       break;
-    case 'editSection':
-      editSection = newDate;
+    case 'orderEditSection':
+      orderEditSection = newDate;
       break;
     default:
       console.error('Unknow type:' + type);
@@ -106,6 +106,6 @@ function save(type, newDate) {
 
 export {
   orderData,
-  editSection,
+  orderEditSection,
   save
 };

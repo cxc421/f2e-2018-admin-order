@@ -1,0 +1,235 @@
+@import 'globals';
+
+.product-page {
+
+  .pagination-row {
+    display: flex;
+
+    .product-pagination {
+      margin-left: auto;
+
+      .page-item {
+        a, button {
+          color: black;
+          border-color: $grey-1;
+          @include remark;
+          padding: 10px 16px;
+        }
+        &.active {
+          a, button {
+            color: white;
+            background: black;
+          }
+        }        
+      }
+    }    
+  }
+
+  .product-page-tooltip {
+    padding: 4px 8px !important;
+    @include placeholder;
+    line-height: 21px !important;
+  }
+
+  .top-menu-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 16px;
+    min-height: 21px;
+
+    .down-icon {
+      margin-left: 5px;
+
+      .down-icon-toggler {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }   
+      
+      .hover-menu {
+        left: 0;
+        transform: none;
+      }
+    }
+
+    .tag-icon {
+      margin-left: 16px;
+      
+      .tag-icon-toggler {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }  
+      
+      .hover-menu {
+        left: 0;
+        transform: none;
+        width: 181px;
+      }    
+      
+      .disabled {
+        color: $grey-4;
+        pointer-events: none;
+      }
+    }
+
+    .add-product-btn {
+      @include placeholder;      
+      padding: 9px 16px 7px;
+      i {
+        margin-left: 8px;
+      }
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  .product-table {
+    margin-top: 16px;
+    margin-top: 22px;
+
+    th {
+      background: white;
+      position: relative;
+      vertical-align: middle;
+      @include subtitle-2;
+      line-height: 19px;
+    }
+
+    td, th {
+      padding-left: 16px;
+    }
+
+    td {
+      @include placeholder;
+      font-weight: 100;
+      line-height: 21px;
+      padding: 20px 16px;
+      .checkbox {
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+      span {
+        vertical-align: middle;
+      }
+    }
+
+    .grey td {
+      color: $grey-4;
+    }
+    .delete td {
+      text-decoration: line-through;
+    }
+
+    tr:nth-child(2n+2) {
+      td {
+        background: #ebebeb;
+      }
+    }
+
+    // .table-box {
+    //   & > * {
+    //     display: flex;
+    //     justify-content: space-between;
+    //     line-height: 21px;
+    //   }
+    //   .grey {
+    //     color: $grey-4;
+    //   }
+
+    //   padding: 8px 0;
+    //   border-top: solid 1px white;
+
+    //   &:first-child {
+    //     padding-top: 0;
+    //     border-top: none;
+    //   }
+    //   &:last-child {
+    //     padding-bottom: 0;
+    //   }
+    // }
+
+    .table-box {
+      display: flex;
+      max-width: 264px;
+      justify-content: space-between;
+      padding-right: 10px;
+
+      div {
+        &::nth-child(1) {
+          color: blue !important;
+        }
+
+      }
+
+
+    }
+
+    .table-box-wrapper {
+      border-bottom: solid 1px white;
+      padding: 8px 0;
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+
+    }
+
+    .table-box-hide {
+      opacity: 0;
+    }
+
+    // .table-box-color {
+    //   // background: pink;
+    //   min-width: 36px;
+    //   text-align: left;
+    // }
+
+    .product-row {
+      display: flex;
+      align-items: center;
+      img {
+        max-width: 50px;
+        margin-right: 8px;
+      }
+    }
+
+    .btn {
+      font-size: 14px;      
+      padding: 9px 16px 7px;
+      color: white;
+      text-transform: uppercase;
+
+      display: inline-flex;
+      align-items: center;
+
+      i {
+        margin-left: 8px;
+      }
+      span, i {
+        vertical-align: middle;        
+      }
+      span {
+        line-height: 18px;
+      }
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+    .btn-menu {
+      left: 0;
+      transform: none;
+      color:black;
+    }
+  }
+
+}
+

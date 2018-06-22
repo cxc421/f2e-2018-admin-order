@@ -11,16 +11,16 @@ import Page from 'components/Page';
 import CheckBox from 'components/CheckBox';
 import DropDown from 'components/DropDown';
 import { transValueToMoney } from 'util/transValueToMoney';
-import { orderData, editSection, save as saveDemoData } from '../demo_data';
+import { orderData, orderEditSection, save as saveDemoData } from '../demo_data';
 
 export default class OrderPage extends React.Component {
   state = {
-    editSection,
+    editSection: orderEditSection,
     dataList: orderData
   };
 
   componentWillUnmount() {
-    saveDemoData('editSection', this.state.editSection);
+    saveDemoData('orderEditSection', this.state.editSection);
     saveDemoData('orderData', this.state.dataList);
   }
 

@@ -5,6 +5,7 @@ import 'styles/App.scss';
 import Header from 'components/Header';
 import HomePage from 'pages/HomePage';
 import OrderPage from 'pages/OrderPage';
+import ProductPage from 'pages/ProductPage';
 
 const App = () => {
   return (    
@@ -14,6 +15,7 @@ const App = () => {
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/orders" component={OrderPage} />
+          <Route path="/product" component={ProductPage} />
         </Switch>
       </div>    
     </HashRouter>
