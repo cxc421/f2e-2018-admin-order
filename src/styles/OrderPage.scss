@@ -2,6 +2,35 @@
 
 .order-page {
 
+  .pagination-row {
+    display: flex;
+
+    .order-pagination {
+      margin-left: auto;
+
+      .page-item {
+        a, button {
+          color: black;
+          border-color: $grey-1;
+          @include remark;
+          padding: 10px 16px;
+        }
+        &.active {
+          a, button {
+            color: white;
+            background: black;
+          }
+        }        
+      }
+    }    
+  }
+
+  .order-page-tooltip {
+    padding: 4px 8px !important;
+    @include placeholder;
+    line-height: 21px !important;
+  }
+
   .top-menu-row {
     display: flex;
     align-items: center;
@@ -9,6 +38,17 @@
 
     .down-icon {
       margin-left: 5px;
+
+      .down-icon-toggler {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }   
+      
+      .hover-menu {
+        left: 0;
+        transform: none;
+      }
     }
 
     .tag-icon {
@@ -18,7 +58,18 @@
         display: flex;
         align-items: center;
         cursor: pointer;
-      }      
+      }  
+      
+      .hover-menu {
+        left: 0;
+        transform: none;
+        width: 181px;
+      }    
+      
+      .disabled {
+        color: $grey-4;
+        pointer-events: none;
+      }
     }
 
     .edit-section {

@@ -1,4 +1,57 @@
-import uuid from 'uuid/v4';
+// ORDER EDIT SECTION
+const editSection = [
+  {
+    id: 'order-id',
+    text: 'Order ID',
+    checked: false
+  },
+  {
+    id: 'customer',
+    text: 'Customer',
+    checked: true
+  },
+  {
+    id: 'product-list',
+    text: 'Product List',
+    checked: true
+  },
+  {
+    id: 'total',
+    text: 'Total',
+    checked: true
+  },
+  {
+    id: 'add-to-chart',
+    text: 'Add to Chart',
+    checked: true
+  },
+  {
+    id: 'check-out',
+    text: 'Check-out',
+    checked: true
+  },
+  {
+    id: 'address',
+    text: 'Address',
+    checked: true
+  },
+  {
+    id: 'phone',
+    text: 'Phone',
+    checked: false
+  },
+  {
+    id: 'email',
+    text: 'Email',
+    checked: false
+  },
+  {
+    id: 'status',
+    text: 'Status',
+    checked: true
+  }
+];
+
 
 // ORDER_DATA
 const ORDER_DATA_NUM = 10;
@@ -9,7 +62,7 @@ for (let i = 0; i < ORDER_DATA_NUM; i++) {
   const status = statusArray[randomNum];
 
   const obj = {
-    'order-id': uuid().substr(0, 4) + (i+1),
+    'order-id': 'A7CE-' + (i+1),
     customer: {
       checked: false,
       name: 'Ian Medina'
@@ -38,5 +91,6 @@ for (let i = 0; i < ORDER_DATA_NUM; i++) {
 }
 
 export {
-  orderData
+  orderData,
+  editSection
 };

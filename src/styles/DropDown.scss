@@ -25,13 +25,14 @@
       width: 100%;
       padding: 8px 0;
       text-align: center;
+      white-space: nowrap;  
+      cursor: default;
 
       @include remark;
 
-      &:hover {
+      &:hover:not(.disabled) {
         background: black;
-        color: white;
-        cursor: default;
+        color: white;        
       }
     }
   }  

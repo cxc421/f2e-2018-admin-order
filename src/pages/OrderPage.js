@@ -1,72 +1,23 @@
 import React from 'react';
 import { 
   Table,
-  Button
+  Button,
+  Pagination, PaginationItem, PaginationLink  
 } from 'reactstrap';
+import ReactTooltip from 'react-tooltip';
 import 'styles/OrderPage.scss';
 
 import Page from 'components/Page';
 import CheckBox from 'components/CheckBox';
 import DropDown from 'components/DropDown';
 import { transValueToMoney } from 'util/transValueToMoney';
-import { orderData } from '../demo_data';
+import { orderData, editSection } from '../demo_data';
 
 export default class OrderPage extends React.Component {
   state = {
-    editSection: [
-      {
-        id: 'order-id',
-        text: 'Order ID',
-        checked: false
-      },
-      {
-        id: 'customer',
-        text: 'Customer',
-        checked: true
-      },
-      {
-        id: 'product-list',
-        text: 'Product List',
-        checked: true
-      },
-      {
-        id: 'total',
-        text: 'Total',
-        checked: true
-      },
-      {
-        id: 'add-to-chart',
-        text: 'Add to Chart',
-        checked: true
-      },
-      {
-        id: 'check-out',
-        text: 'Check-out',
-        checked: true
-      },
-      {
-        id: 'address',
-        text: 'Address',
-        checked: true
-      },
-      {
-        id: 'phone',
-        text: 'Phone',
-        checked: false
-      },
-      {
-        id: 'email',
-        text: 'Email',
-        checked: false
-      },
-      {
-        id: 'status',
-        text: 'Status',
-        checked: true
-      }
-    ],
+    editSection,
     dataList: orderData
-  }
+  };
 
   updateEditSection(id, checked) {
     this.setState(prevState => ({
@@ -136,13 +87,27 @@ export default class OrderPage extends React.Component {
     }));
   };
 
+  updateStatusToChecked = (status) => {    
+    this.setState(prevState => ({
+      dataList: prevState.dataList.map(data => {
+        if (data.customer.checked) {          
+          return {
+            ...data, status
+          };
+        } else {
+          return data;
+        }
+      })
+    }));
+  };
+
   renderTdContent(data, tag) {
     const obj = data[tag];
     switch (tag) {
       case 'customer':
         return (
           <React.Fragment>
-            <CheckBox checked={obj.checked} onClick={() => this.toogleCustomerCheck(data['order-id'], !obj.checked)}/>
+            <CheckBox type="white" checked={obj.checked} onClick={() => this.toogleCustomerCheck(data['order-id'], !obj.checked)}/>
             <span>{obj.name}</span>
           </React.Fragment>
         );
@@ -207,11 +172,10 @@ export default class OrderPage extends React.Component {
           <div className="top-menu-row">
 
             <CheckBox checked={allChecked} onClick={() => this.toogleCustomerCheck(null, !allChecked) } />
-            <i className="fas fa-caret-down down-icon"></i>
-            
-            <DropDown className="tag-icon" keepMenuOpen={false}>
-              <div dp-type="toggler" className="tag-icon-toggler">
-                <i className="fas fa-tags"></i>              
+           
+            <DropDown className="down-icon" keepMenuOpen={false}>
+              <div dp-type="toggler" className="down-icon-toggler">
+                <i className="fas fa-caret-down"></i>              
               </div>            
               <div dp-type="menu" className="hover-menu">
                 <div onClick={() => this.toogleCustomerCheck(null, true)}>Select All</div>
@@ -221,7 +185,21 @@ export default class OrderPage extends React.Component {
                 <div onClick={() => this.checkByStatus('Shipping')}>Shipping</div>
                 <div onClick={() => this.checkByStatus('Done')}>Done</div>
               </div>
-            </DropDown>
+            </DropDown>            
+
+            <DropDown className="tag-icon" keepMenuOpen={false}>
+              <div dp-type="toggler" className="tag-icon-toggler" data-tip="Change Status" onMouseDown={() => ReactTooltip.hide()}>
+                <i className="fas fa-tags"></i>
+              </div>
+              <div dp-type="menu" className="hover-menu">
+                <div className="disabled">Change Status to...</div>
+                <div onClick={() => this.updateStatusToChecked('Paid')}>Paid</div>
+                <div onClick={() => this.updateStatusToChecked('Unpaid')}>Unpaid</div>
+                <div onClick={() => this.updateStatusToChecked('Shipping')}>Shipping</div>
+                <div onClick={() => this.updateStatusToChecked('Done')}>Done</div>
+              </div>
+            </DropDown>            
+                                      
 
             <DropDown className="edit-section" keepMenuOpen={true}>
               <div dp-type="toggler" className="edit-text">
@@ -246,6 +224,7 @@ export default class OrderPage extends React.Component {
               </div>
             </DropDown>
 
+            <ReactTooltip effect="solid" place="bottom" offset={{ top: -8 }} className="order-page-tooltip"/>
           </div>
 
           <Table className="order-table" borderless={true} striped={false} >
@@ -290,6 +269,42 @@ export default class OrderPage extends React.Component {
             </tbody>
           </Table>          
 
+          <div className="pagination-row">
+            <Pagination aria-label="Order Page Navigation" className="order-pagination">
+              <PaginationItem disabled>
+                <PaginationLink previous href="#" />
+              </PaginationItem>
+              <PaginationItem active>
+                <PaginationLink>
+                  1
+            </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink>
+                  2
+            </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink>
+                  3
+            </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink>
+                  4
+          </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink>
+                  5
+          </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink next />
+              </PaginationItem>
+            </Pagination>          
+          </div>
+          
         </div>
       </Page>
     )
