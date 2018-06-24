@@ -54,3 +54,12 @@ $app-width: 1024px;
   font-size: $font-size-1;
   font-weight: normal;
 }
+
+
+@mixin clearfix {
+  &::after {
+    display: block;
+    clear: both;
+    content: "";
+  }
+}

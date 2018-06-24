@@ -10,11 +10,13 @@ import 'styles/ProductPage.scss';
 import Page from 'components/Page';
 import CheckBox from 'components/CheckBox';
 import DropDown from 'components/DropDown';
+import AddProductModal from 'components/AddProductModal';
 import { transValueToMoney } from 'util/transValueToMoney';
 import { productData, save as saveDemoData } from '../demo_data';
 
 export default class OrderPage extends React.Component {
   state = {    
+    modalOpen: false,
     dataList: productData
   };
 
@@ -102,6 +104,27 @@ export default class OrderPage extends React.Component {
     }));
   };
 
+  onModalToggle = () => {
+    this.setState(prevState => ({
+      modalOpen: ! prevState.modalOpen
+    }));  
+  };
+
+  onNewProductAdd = (newSpec) => {
+    this.setState(prevState => {
+      const obj = {
+        dataList: [
+          ...prevState.dataList,
+          newSpec
+        ]
+      };
+
+      // console.log(obj);
+
+      return obj;
+    });
+  };
+
   renderTdContent(data, tag) {
     const obj = data[tag];
     switch (tag) {
@@ -184,7 +207,7 @@ export default class OrderPage extends React.Component {
 
   render() {
 
-    const { dataList } = this.state;
+    const { dataList, modalOpen } = this.state;
     const tagArray = ['product', 'original', 'discount', 'spec', 'status'];
     const allChecked = !dataList.some(data => !data.product.checked);
 
@@ -219,7 +242,7 @@ export default class OrderPage extends React.Component {
               </div>
             </DropDown>
 
-            <Button color="dark" className="add-product-btn">
+            <Button color="dark" className="add-product-btn" onClick={this.onModalToggle}>
               <span>ADD NEW PRODUCT</span>
               <i className="fas fa-plus"></i>
             </Button>
@@ -263,9 +286,13 @@ export default class OrderPage extends React.Component {
             }
             </tbody>
           </Table>
-          {
-            // <div style={{ height: 800, width: 0 }}></div>
-          }
+
+          <AddProductModal 
+            isOpen={modalOpen} 
+            onModalToggle={this.onModalToggle} 
+            onNewProductAdd={this.onNewProductAdd} 
+          />
+
         </div>
       </Page>
     )
