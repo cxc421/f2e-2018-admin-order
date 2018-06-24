@@ -1,8 +1,19 @@
-### F2E - Admin Order
+# F2E F2E - Admin Order
 
-#### Commands:
-- `npm start`: Start a hot-moudule-replacement environment wiith JS & SCSS
-- `npm build`: Build release files.  
+> Demo: https://cxc421.github.io/f2e-2018-admin-order  
 
+## Development Tags
 
+*   React
+*   Webpack
+*   ES6
+*   SASS
+*   Bootstrap
+*   Canvas
 
+## ToDo:
+
+- RWD
+- Server & database
+- Dynamic canvas chart
+- Image upload & drag and drop function
