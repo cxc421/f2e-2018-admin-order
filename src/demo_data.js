@@ -167,6 +167,7 @@ function save(type, newData) {
       break;
     case 'productData':
       productData = newData;
+      break;
     default:
       console.error('Unknow type:' + type);
   }
